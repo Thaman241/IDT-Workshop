@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thaman // Student Developer Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            carbon: {
+              950: '#080b0f',
+              900: '#0d1117',
+              850: '#121820',
+              800: '#161e29',
+              700: '#212c3d',
+            },
+            cyber: {
+              emerald: '#10b981',
+              lime: '#a3e635'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes radarPing {
+      0% { transform: scale(1); opacity: 0.9; }
+      75%, 100% { transform: scale(2.4); opacity: 0; }
+    }
+    .radar-ping {
+      animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    .text-glow-emerald {
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.55), 0 0 35px rgba(16, 185, 129, 0.25);
+    }
+    .button-glow:hover {
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.7), 0 0 10px rgba(163, 230, 53, 0.4);
+    }
+    .cyber-card {
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+      will-change: transform;
+    }
+    .tilt-card:hover {
+      border-color: rgba(16, 185, 129, 0.7);
+      box-shadow: 0 16px 45px -10px rgba(16, 185, 129, 0.35), 0 0 25px rgba(16, 185, 129, 0.18);
+    }
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0d1117;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-[#0d1117] text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-black antialiased relative">
+
+  <!-- Interactive HTML5 Matrix Grid Canvas -->
+  <canvas id="matrix-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Floating Frosted-Glass Navbar -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 transition-all duration-300">
+    <nav id="navbar" class="max-w-6xl mx-auto cyber-card border border-emerald-500/20 rounded-2xl py-3 px-4 sm:px-6 shadow-[0_8px_32px_rgba(0,0,0,0.6)] flex items-center justify-between transition-all duration-300">
+      
+      <!-- Brand / Logo -->
+      <a href="#home" class="flex items-center gap-2.5 group focus:outline-none">
+        <div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-[#121820] border border-emerald-500/30 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all">
+          <span class="font-mono text-xs font-bold text-emerald-400 group-hover:text-lime-300">&lt;T/&gt;</span>
+          <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]"></span>
+        </div>
+        <div class="flex flex-col text-left">
+          <div class="flex items-center gap-1.5">
+            <span class="text-base font-bold tracking-tight text-white group-hover:text-emerald-300 transition-colors">Thaman</span>
+            <span class="text-[11px] font-mono font-medium text-emerald-400/90 bg-emerald-950/60 px-1.5 py-0.2 rounded border border-emerald-500/20">.dev</span>
+          </div>
+          <span class="text-[11px] font-mono text-slate-400 hidden sm:inline-block tracking-wider">KSIT // CS 2ND YEAR</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden md:flex items-center gap-1 lg:gap-2">
+        <a href="#about" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10 hover:border-emerald-500/20 rounded-lg transition-all border border-transparent">About</a>
+        <a href="#projects" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10 hover:border-emerald-500/20 rounded-lg transition-all border border-transparent">Projects</a>
+        <a href="#skills" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10 hover:border-emerald-500/20 rounded-lg transition-all border border-transparent">Skills</a>
+        <a href="#campus-life" class="nav-link px-3.5 py-1.5 text-sm font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/25 rounded-lg transition-all">Campus Journey</a>
+        <a href="#contact" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10 hover:border-emerald-500/20 rounded-lg transition-all border border-transparent">Contact</a>
+      </div>
+
+      <!-- Right Action CTA -->
+      <div class="hidden md:flex items-center gap-3">
+        <button onclick="openModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono font-medium text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/30 hover:border-emerald-400 rounded-xl transition-all shadow-[0_0_12px_rgba(16,185,129,0.15)] hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:-translate-y-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+          <span>Open for Internships</span>
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="flex md:hidden items-center">
+        <button id="mobile-toggle" aria-label="Toggle menu" class="p-2 rounded-xl text-slate-300 bg-[#121820] border border-emerald-500/30 hover:border-emerald-400 focus:outline-none">
+          <svg id="hamburger-icon" class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden max-w-6xl mx-auto mt-2 cyber-card border border-emerald-500/20 rounded-xl p-4 shadow-2xl">
+      <div class="flex flex-col space-y-2">
+        <a href="#about" onclick="closeMobileMenu()" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10">About</a>
+        <a href="#projects" onclick="closeMobileMenu()" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10">Projects</a>
+        <a href="#skills" onclick="closeMobileMenu()" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10">Skills</a>
+        <a href="#campus-life" onclick="closeMobileMenu()" class="px-3 py-2 rounded-lg text-sm font-medium text-emerald-300 bg-emerald-500/10">Campus Journey</a>
+        <a href="#contact" onclick="closeMobileMenu()" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-500/10">Contact</a>
+        <button onclick="closeMobileMenu(); openModal();" class="w-full text-center py-2.5 mt-2 rounded-lg text-xs font-mono font-medium text-emerald-300 bg-emerald-950/50 border border-emerald-500/40">
+          🟢 Get in Touch // Let's Connect
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Opening 'Hero' Intro Screen -->
+  <section id="home" class="relative z-10 pt-28 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto flex flex-col items-center">
+    
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[580px] h-[340px] sm:h-[450px] bg-gradient-to-tr from-emerald-500/15 via-emerald-600/10 to-lime-500/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+
+    <!-- Status Badge: Blinking Radar Pill -->
+    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-emerald-500/35 bg-[#0d1117]/80 hover:bg-emerald-950/40 backdrop-blur-md text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.18)] hover:shadow-[0_0_25px_rgba(16,185,129,0.3)] hover:border-emerald-400 transition-all duration-300 mb-8 cursor-default group">
+      <span class="relative flex h-2.5 w-2.5 items-center justify-center">
+        <span class="radar-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-lime-400 shadow-[0_0_8px_#a3e635]"></span>
+      </span>
+
+      <span class="font-mono text-xs sm:text-sm font-semibold tracking-wide text-emerald-300 group-hover:text-lime-300 transition-colors">
+        Student Developer // Open for Internships
+      </span>
+
+      <span class="hidden sm:inline-block w-1 h-1 rounded-full bg-emerald-500/40"></span>
+      <span class="hidden sm:inline-block font-mono text-[11px] text-emerald-400/80 tracking-wider">
+        KSIT '27
+      </span>
+    </div>
+
+    <!-- Main Headline -->
+    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.18] sm:leading-[1.12]">
+      Hey, I am 
+      <span class="relative inline-block">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-lime-400 text-glow-emerald">
+          Thaman
+        </span>
+        <span class="absolute left-0 bottom-1 sm:bottom-2 w-full h-[3px] bg-gradient-to-r from-emerald-500 to-lime-400 opacity-70 rounded-full"></span>
+      </span>
+      <br class="hidden sm:block">
+      <span class="text-slate-100 font-black">
+        — Building the Future of Tech.
+      </span>
+    </h1>
+
+    <!-- Student Bio -->
+    <p class="max-w-2xl text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed font-normal mb-10 text-balance">
+      <span class="text-white font-medium">2nd Year Computer Science Student</span> at 
+      <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 font-mono font-medium text-sm sm:text-base">
+        K S I T
+      </span> 
+      passionate about 
+      <span class="text-emerald-400 font-medium underline decoration-emerald-500/40 decoration-2 underline-offset-4">
+        web development
+      </span>, 
+      <span class="text-lime-300 font-medium underline decoration-lime-400/40 decoration-2 underline-offset-4">
+        AI
+      </span>, and building real-world projects.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full sm:w-auto mb-14">
+      <a href="#projects" class="button-glow group relative inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-sm sm:text-base font-bold text-[#0d1117] bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all duration-300 shadow-[0_0_25px_rgba(16,185,129,0.45)] hover:-translate-y-1 active:translate-y-0 focus:outline-none">
+        <span>View My Projects</span>
+        <svg class="w-4 h-4 text-[#0d1117] transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+
+      <button onclick="handleDownloadCV()" id="cv-btn" class="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 text-sm sm:text-base font-medium text-emerald-300 hover:text-white bg-[#0d1117]/60 hover:bg-emerald-950/40 border border-emerald-500/40 hover:border-emerald-400 rounded-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 active:translate-y-0 shadow-[0_0_15px_rgba(16,185,129,0.12)] hover:shadow-[0_0_25px_rgba(16,185,129,0.25)] focus:outline-none">
+        <svg class="w-4 h-4 text-emerald-400 group-hover:text-lime-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span id="cv-btn-text">Download Resume / CV</span>
+      </button>
+    </div>
+
+    <!-- Telemetry Dock -->
+    <div class="w-full max-w-2xl cyber-card rounded-2xl border border-emerald-500/20 p-4 sm:p-5 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+      <div class="flex items-center justify-between text-left border-b border-slate-800/80 pb-3 mb-3">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span class="font-mono text-xs font-semibold text-slate-300">PORTFOLIO_CORE // TELEMETRY</span>
+        </div>
+        <div class="flex items-center gap-1.5 font-mono text-[11px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping"></span>
+          <span>SYSTEM ONLINE</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="p-2.5 rounded-xl bg-[#080b0f]/80 border border-emerald-500/10">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Institution</div>
+          <div class="text-xs sm:text-sm font-bold text-white mt-0.5">K S I T</div>
+          <div class="text-[10px] font-mono text-emerald-400">Bangalore</div>
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-[#080b0f]/80 border border-emerald-500/10">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Academic Year</div>
+          <div class="text-xs sm:text-sm font-bold text-white mt-0.5">2nd Year B.E.</div>
+          <div class="text-[10px] font-mono text-lime-400">Computer Science</div>
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-[#080b0f]/80 border border-emerald-500/10">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Tech Focus</div>
+          <div class="text-xs sm:text-sm font-bold text-white mt-0.5">Web + AI</div>
+          <div class="text-[10px] font-mono text-emerald-400">React • Tailwind</div>
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-[#080b0f]/80 border border-emerald-500/10">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Internship</div>
+          <div class="text-xs sm:text-sm font-bold text-emerald-400 mt-0.5 flex items-center justify-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+            Open
+          </div>
+          <div class="text-[10px] font-mono text-slate-400">2025-2026 Batch</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS SHOWCASE -->
+  <section id="projects" class="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto scroll-mt-20">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">
+        <svg class="w-3.5 h-3.5 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        Featured Projects Showcase
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        Engineered with Code & Purpose
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mt-3 leading-relaxed">
+        Interactive 3D showcase of student software engineering projects spanning responsive web apps, computer vision, and academic marketplaces.
+      </p>
+    </div>
+
+    <!-- Filter Pill Row -->
+    <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-12" id="filter-container">
+      <button onclick="setFilter('All', this)" class="filter-btn active px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-mono font-bold bg-emerald-400 text-[#0d1117] shadow-[0_0_20px_rgba(16,185,129,0.55)] transition-all">
+        All
+      </button>
+      <button onclick="setFilter('Web Apps', this)" class="filter-btn px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium bg-[#0d1117]/80 text-slate-400 hover:text-emerald-300 border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-[#121820] transition-all">
+        Web Apps
+      </button>
+      <button onclick="setFilter('AI / ML', this)" class="filter-btn px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium bg-[#0d1117]/80 text-slate-400 hover:text-emerald-300 border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-[#121820] transition-all">
+        AI / ML
+      </button>
+      <button onclick="setFilter('Mini-Projects', this)" class="filter-btn px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium bg-[#0d1117]/80 text-slate-400 hover:text-emerald-300 border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-[#121820] transition-all">
+        Mini-Projects
+      </button>
+    </div>
+
+    <!-- 3-Column Projects Grid -->
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 items-stretch">
+      
+      <!-- Project 1 -->
+      <div class="tilt-card project-card relative rounded-2xl bg-[#0d1117]/85 backdrop-blur-xl border border-emerald-500/20 p-6 sm:p-7 flex flex-col justify-between overflow-hidden cursor-default group" data-categories="All,Web Apps,Mini-Projects">
+        <div class="card-shine pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 z-20"></div>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/30 text-emerald-300">Web App</span>
+          </div>
+          <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors mb-3">Campus Event Finder</h3>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">A centralized platform that helps students discover upcoming college events, workshops, hackathons, and cultural activities. Students can explore event details, register for events, and stay updated without missing important campus activities.</p>
+        </div>
+        <div class="relative z-10 pt-4 border-t border-slate-800/80">
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#React</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Firebase</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#JavaScript</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Tailwind CSS</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="https://campus-event-finder-demo.vercel.app" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-emerald-300 group-hover:text-[#0d1117] bg-emerald-500/15 group-hover:bg-emerald-400 border border-emerald-500/40 transition-all duration-300">
+              <span>Live Demo</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <a href="https://github.com/thaman-dev/campus-event-finder" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-[#080b0f]/80 hover:bg-[#161e29] border border-slate-800 transition-all">
+              <span>GitHub Code</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="tilt-card project-card relative rounded-2xl bg-[#0d1117]/85 backdrop-blur-xl border border-emerald-500/20 p-6 sm:p-7 flex flex-col justify-between overflow-hidden cursor-default group" data-categories="All,AI / ML">
+        <div class="card-shine pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 z-20"></div>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </div>
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-lime-950/60 border border-lime-500/30 text-lime-300">AI / ML</span>
+          </div>
+          <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors mb-3">Smart Attendance Tracker</h3>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">An intelligent attendance management system that automates student attendance tracking using facial recognition. It uses a camera and computer vision to identify students, record attendance, and reduce manual work for teachers.</p>
+        </div>
+        <div class="relative z-10 pt-4 border-t border-slate-800/80">
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Python</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#OpenCV</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Face Recognition</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#SQLite</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="https://smart-attendance-tracker-demo.streamlit.app" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-emerald-300 group-hover:text-[#0d1117] bg-emerald-500/15 group-hover:bg-emerald-400 border border-emerald-500/40 transition-all duration-300">
+              <span>Live Demo</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <a href="https://github.com/thaman-dev/smart-attendance-tracker" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-[#080b0f]/80 hover:bg-[#161e29] border border-slate-800 transition-all">
+              <span>GitHub Code</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="tilt-card project-card relative rounded-2xl bg-[#0d1117]/85 backdrop-blur-xl border border-emerald-500/20 p-6 sm:p-7 flex flex-col justify-between overflow-hidden cursor-default group" data-categories="All,Web Apps,Mini-Projects">
+        <div class="card-shine pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 z-20"></div>
+        <div class="relative z-10">
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/30 text-emerald-300">Web App</span>
+          </div>
+          <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors mb-3">Student Notes Marketplace</h3>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">A student-focused platform where users can upload, browse, share, and download academic notes and study materials. It helps students access quality learning resources, collaborate with peers, and prepare for examinations more efficiently.</p>
+        </div>
+        <div class="relative z-10 pt-4 border-t border-slate-800/80">
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Tailwind CSS</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Node.js</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#Express.js</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-[#080b0f] text-emerald-300 border border-emerald-500/20">#MongoDB</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="https://student-notes-marketplace-demo.vercel.app" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-emerald-300 group-hover:text-[#0d1117] bg-emerald-500/15 group-hover:bg-emerald-400 border border-emerald-500/40 transition-all duration-300">
+              <span>Live Demo</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <a href="https://github.com/thaman-dev/student-notes-marketplace" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-[#080b0f]/80 hover:bg-[#161e29] border border-slate-800 transition-all">
+              <span>GitHub Code</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE 'TECH STACK & SKILLS' SECTION -->
+  <section id="skills" class="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto scroll-mt-20">
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">
+        <svg class="w-3.5 h-3.5 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        Technical Arsenal
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        Tech Stack & Skills
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mt-3 leading-relaxed">
+        My technical competencies categorized into core languages, modern frameworks & tooling, and fundamental computer science principles. Hover over any badge to check comfort level.
+      </p>
+    </div>
+
+    <!-- 3 Categorized Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 items-stretch">
+      
+      <!-- CATEGORY 1: Languages -->
+      <div class="cyber-card rounded-2xl border border-emerald-500/20 p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-emerald-500/40 transition-colors">
+        <div>
+          <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white tracking-tight">Languages</h3>
+                <span class="text-[11px] font-mono text-emerald-400/80">Syntax & Logic</span>
+              </div>
+            </div>
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-400 border border-slate-800">4 skills</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            
+            <!-- C++ -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M9 14.5C7.6 14.5 6.5 13.4 6.5 12C6.5 10.6 7.6 9.5 9 9.5C9.8 9.5 10.5 9.9 10.9 10.5" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M14 11V13M13 12H15" stroke="#a3e635" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M18 11V13M17 12H19" stroke="#a3e635" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">C++</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Python -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M11.9 2C8.6 2 8.7 3.4 8.7 3.4L8.7 4.9H12.1V5.4H5.3C3.6 5.4 2.1 6.8 2.1 9.4C2.1 12 3.4 12.3 3.4 12.3H5V10.7C5 8.7 6.7 8.7 6.7 8.7H10.1C11.9 8.7 12 7 12 7V3.4C12 3.4 12 2 11.9 2ZM10.4 3.1C10.8 3.1 11.1 3.4 11.1 3.8C11.1 4.2 10.8 4.5 10.4 4.5C10 4.5 9.7 4.2 9.7 3.8C9.7 3.4 10 3.1 10.4 3.1Z" fill="#38bdf8"/>
+                    <path d="M12.1 22C15.4 22 15.3 20.6 15.3 20.6L15.3 19.1H11.9V18.6H18.7C20.4 18.6 21.9 17.2 21.9 14.6C21.9 12 20.6 11.7 20.6 11.7H19V13.3C19 15.3 17.3 15.3 17.3 15.3H13.9C12.1 15.3 12 17 12 17V20.6C12 20.6 12 22 12.1 22ZM13.6 20.9C13.2 20.9 12.9 20.6 12.9 20.2C12.9 19.8 13.2 19.5 13.6 19.5C14 19.5 14.3 19.8 14.3 20.2C14.3 20.6 14 20.9 13.6 20.9Z" fill="#fbbf24"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">Python</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5 rounded" viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="4" fill="#F7DF1E"/>
+                    <path d="M6 18.5V14.5M10.5 14.5C10.5 13.5 9.5 13 8.5 13C7.5 13 6.5 13.5 6.5 14.5" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 18C12.5 18.4 13.5 18.6 14.5 18.6C16.5 18.6 17.5 17.5 17.5 16C17.5 13.5 14.5 14 14.5 12.5C14.5 11.8 15 11.4 16 11.4C16.8 11.4 17.5 11.7 18 12.2" stroke="#000" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">JavaScript</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Java -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M8 17C10.5 17.5 14 17.5 16 17C14.5 18.5 9.5 18.5 8 17Z" fill="#f97316"/>
+                    <path d="M6.5 19.5C9.5 20.3 14.5 20.3 17.5 19.5C15.5 21.5 8.5 21.5 6.5 19.5Z" fill="#f97316"/>
+                    <path d="M13 3C11 5 13 7 11 9M16 4C14 6 15 8 13.5 10M10 6C9 7.5 9.5 9 8.5 10.5" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">Java</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+                  <span class="text-lime-300">Familiar</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 2: Frameworks & Tools -->
+      <div class="cyber-card rounded-2xl border border-emerald-500/20 p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-emerald-500/40 transition-colors">
+        <div>
+          <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white tracking-tight">Frameworks & Tools</h3>
+                <span class="text-[11px] font-mono text-emerald-400/80">Stack & Tooling</span>
+              </div>
+            </div>
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-400 border border-slate-800">4 tools</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            
+            <!-- React -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <ellipse cx="12" cy="12" rx="9" ry="3.8" stroke="#38bdf8" stroke-width="1.4" transform="rotate(30 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="9" ry="3.8" stroke="#38bdf8" stroke-width="1.4" transform="rotate(90 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="9" ry="3.8" stroke="#38bdf8" stroke-width="1.4" transform="rotate(150 12 12)"/>
+                    <circle cx="12" cy="12" r="1.8" fill="#38bdf8"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">React</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Tailwind CSS -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 13C6.8 10 9 8.5 12.5 8.5C16.7 8.5 17.5 11.5 19 12C20 12.4 21 12 22 10.5C21.2 13.5 19 15 15.5 15C11.3 15 10.5 12 9 11.5C8 11.1 7 11.5 6 13Z" fill="#38bdf8"/>
+                    <path d="M2 18.5C2.8 15.5 5 14 8.5 14C12.7 14 13.5 17 15 17.5C16 17.9 17 17.5 18 16C17.2 19 15 20.5 11.5 20.5C7.3 20.5 6.5 17.5 5 17C4 16.6 3 17 2 18.5Z" fill="#06b6d4"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">Tailwind CSS</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Node.js -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L21 7.2V16.8L12 22L3 16.8V7.2L12 2Z" stroke="#22c55e" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 6.5V11.5M12 11.5L8.5 9.5M12 11.5L15.5 9.5M8.5 14.5L12 16.5L15.5 14.5" stroke="#86efac" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">Node.js</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+                  <span class="text-lime-300">Familiar</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Git / GitHub -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center text-emerald-400">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">Git / GitHub</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 3: Core CS Concepts -->
+      <div class="cyber-card rounded-2xl border border-emerald-500/20 p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-emerald-500/40 transition-colors">
+        <div>
+          <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white tracking-tight">Core CS Concepts</h3>
+                <span class="text-[11px] font-mono text-emerald-400/80">Theory & Principles</span>
+              </div>
+            </div>
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-400 border border-slate-800">4 pillars</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            
+            <!-- Data Structures -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="4" r="2.5" stroke="#10b981" stroke-width="1.5"/>
+                    <circle cx="6" cy="18" r="2.5" stroke="#34d399" stroke-width="1.5"/>
+                    <circle cx="18" cy="18" r="2.5" stroke="#34d399" stroke-width="1.5"/>
+                    <path d="M10.5 6L7.5 15.5M13.5 6L16.5 15.5M6 18H18" stroke="#10b981" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">Data Structures</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- OOP -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L4 6.5V15.5L12 20L20 15.5V6.5L12 2Z" stroke="#a3e635" stroke-width="1.5"/>
+                    <path d="M12 20V11M12 11L4 6.5M12 11L20 6.5" stroke="#84cc16" stroke-width="1.4"/>
+                    <circle cx="12" cy="11" r="1.5" fill="#bef264"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">OOP</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-emerald-300">Proficient</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- DBMS -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <ellipse cx="12" cy="5" rx="8" ry="2.5" stroke="#34d399" stroke-width="1.5"/>
+                    <path d="M4 5V12C4 13.4 7.6 14.5 12 14.5C16.4 14.5 20 13.4 20 12V5" stroke="#10b981" stroke-width="1.5"/>
+                    <path d="M4 12V19C4 20.4 7.6 21.5 12 21.5C16.4 21.5 20 20.4 20 19V12" stroke="#059669" stroke-width="1.5"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">DBMS</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+                  <span class="text-lime-300">Familiar</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+            <!-- OS -->
+            <div class="relative group">
+              <div class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(16,185,129,0.32)] cursor-default select-none">
+                <div class="w-6 h-6 shrink-0 flex items-center justify-center">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="5" width="14" height="14" rx="2" stroke="#2dd4bf" stroke-width="1.5"/>
+                    <rect x="9" y="9" width="6" height="6" rx="1" fill="#14b8a6"/>
+                    <path d="M9 2V5M15 2V5M9 19V22M15 19V22M2 9H5M2 15H5M19 9H22M19 15H22" stroke="#2dd4bf" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white transition-colors truncate">OS</span>
+              </div>
+              <div class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#080b0f] border border-emerald-500/40 text-[11px] font-mono shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
+                  <span class="text-teal-300">Currently Learning</span>
+                </div>
+                <div class="w-2 h-2 bg-[#080b0f] border-r border-b border-emerald-500/40 transform rotate-45 mx-auto -mt-1"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Comfort Level Legend -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-400 pt-4 border-t border-slate-800/80">
+      <span class="text-slate-500 uppercase tracking-widest text-[11px]">Proficiency Key:</span>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981]"></span>
+        <span class="text-slate-300">Proficient (Daily Driver)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-lime-400 shadow-[0_0_6px_#a3e635]"></span>
+        <span class="text-slate-300">Familiar (Working Competence)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-teal-400 shadow-[0_0_6px_#2dd4bf]"></span>
+        <span class="text-slate-300">Currently Learning (Active Syllabus Focus)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION & CAMPUS JOURNEY (Directly below Skills) -->
+  <section id="campus-life" class="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto scroll-mt-20">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col items-center text-center mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">
+        <svg class="w-3.5 h-3.5 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+        Academics & Milestones
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        Education & Campus Journey
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base max-w-2xl mt-3 leading-relaxed">
+        Tracking my academic progression, student achievements, and campus leadership at K S Institute of Technology (KSIT).
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Left Column: Interactive Milestone Vertical Timeline -->
+      <div class="lg:col-span-7 relative">
+        
+        <!-- Illuminated Emerald Beam Line -->
+        <div class="absolute left-4 sm:left-6 top-6 bottom-6 w-[2px] bg-gradient-to-b from-emerald-400 via-emerald-500/70 to-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.7)]" aria-hidden="true"></div>
+
+        <div class="space-y-8 sm:space-y-10">
+          
+          <!-- Milestone 1: 2026 (Current) -->
+          <div class="relative flex items-start gap-5 sm:gap-7 group">
+            <div class="relative z-20 shrink-0 mt-1.5 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12">
+              <span class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-emerald-400 opacity-75"></span>
+              <div class="w-8 h-8 rounded-full bg-[#080b0f] border-2 border-emerald-400 flex items-center justify-center shadow-[0_0_18px_#10b981]">
+                <span class="w-2.5 h-2.5 rounded-full bg-lime-400 shadow-[0_0_8px_#a3e635]"></span>
+              </div>
+            </div>
+
+            <div class="flex-1 rounded-2xl bg-[#0d1117]/85 backdrop-blur-xl border border-emerald-500/20 group-hover:border-emerald-400/80 p-5 sm:p-6 transition-all duration-300 group-hover:translate-x-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] group-hover:shadow-[0_10px_30px_rgba(16,185,129,0.18)]">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span class="font-mono text-sm sm:text-base font-extrabold text-emerald-400 bg-emerald-950/70 px-2.5 py-0.5 rounded-md border border-emerald-500/30">
+                  2026
+                </span>
+                <span class="font-mono text-[11px] text-lime-300 bg-lime-950/50 px-2.5 py-0.5 rounded border border-lime-500/30">
+                  🟢 Current Year • Active Focus
+                </span>
+              </div>
+
+              <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition-colors mt-2 mb-2">
+                Engineering Student – Building Technical Skills
+              </h3>
+
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                Currently pursuing B.Tech in Computer Science, focusing on AI, web development, programming, and real-world project development.
+              </p>
+
+              <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800">
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#AI & ML</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#Fullstack Dev</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#Real-world Projects</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 2: 2025 -->
+          <div class="relative flex items-start gap-5 sm:gap-7 group">
+            <div class="relative z-20 shrink-0 mt-1.5 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12">
+              <div class="w-6 h-6 rounded-full bg-[#080b0f] border-2 border-emerald-500/60 group-hover:border-emerald-400 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.5)] transition-all flex items-center justify-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              </div>
+            </div>
+
+            <div class="flex-1 rounded-2xl bg-[#0d1117]/85 backdrop-blur-xl border border-emerald-500/20 group-hover:border-emerald-400/80 p-5 sm:p-6 transition-all duration-300 group-hover:translate-x-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] group-hover:shadow-[0_10px_30px_rgba(16,185,129,0.18)]">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span class="font-mono text-sm sm:text-base font-extrabold text-emerald-400 bg-emerald-950/70 px-2.5 py-0.5 rounded-md border border-emerald-500/30">
+                  2025
+                </span>
+                <span class="font-mono text-[11px] text-slate-400 bg-[#080b0f] px-2 py-0.5 rounded border border-slate-800">
+                  Team Collaboration & MVPs
+                </span>
+              </div>
+
+              <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition-colors mt-2 mb-2">
+                Exploring Development & Team Projects
+              </h3>
+
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                Strengthened programming fundamentals and collaborated on technical projects, gaining practical experience in software development and problem-solving.
+              </p>
+
+              <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800">
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#Collaborative Projects</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#Hackathons</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#Open Source</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 3: 2024 -->
+          <div class="relative flex items-start gap-5 sm:gap-7 group">
+            <div class="relative z-20 shrink-0 mt-1.5 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12">
+              <div class="w-6 h-6 rounded-full bg-[#080b0f] border-2 border-emerald-500/60 group-hover:border-emerald-400 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.5)] transition-all flex items-center justify-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              </div>
+            </div>
+
+            <div class="flex-1 rounded-2xl bg-[#0d1117]/85 backdrop-blur-xl border border-emerald-500/20 group-hover:border-emerald-400/80 p-5 sm:p-6 transition-all duration-300 group-hover:translate-x-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] group-hover:shadow-[0_10px_30px_rgba(16,185,129,0.18)]">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span class="font-mono text-sm sm:text-base font-extrabold text-emerald-400 bg-emerald-950/70 px-2.5 py-0.5 rounded-md border border-emerald-500/30">
+                  2024
+                </span>
+                <span class="font-mono text-[11px] text-slate-400 bg-[#080b0f] px-2 py-0.5 rounded border border-slate-800">
+                  Foundation Year
+                </span>
+              </div>
+
+              <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition-colors mt-2 mb-2">
+                Started Engineering Journey
+              </h3>
+
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                Began my engineering degree, developed an interest in technology, and started learning programming and core computer science concepts.
+              </p>
+
+              <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800">
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#C++ Logic</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#Algorithms</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#080b0f] text-slate-300 border border-slate-800">#CS Principles</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Achievement Badges (2x2 Grid) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <div class="cyber-card rounded-2xl border border-emerald-500/20 p-5 sm:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              <span class="font-mono text-xs font-bold text-slate-200 uppercase tracking-wider">
+                Accolades & Achievements
+              </span>
+            </div>
+            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/20">
+              Verified
+            </span>
+          </div>
+
+          <!-- 2x2 Grid with Subtle Hover Highlights -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            
+            <!-- Badge 1 -->
+            <div class="group relative rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] flex flex-col justify-between cursor-default">
+              <div>
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-xl">🏆</span>
+                  <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-wider bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/20">Winner</span>
+                </div>
+                <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  1st Place
+                </div>
+                <div class="text-xs font-medium text-slate-300 mt-0.5">
+                  University Hackathon
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2.5 leading-relaxed pt-2 border-t border-slate-800">
+                Ranked #1 for rapid prototyping and AI integration in 36hr hack sprint.
+              </p>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="group relative rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] flex flex-col justify-between cursor-default">
+              <div>
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-xl">⚡</span>
+                  <span class="text-[10px] font-mono text-lime-400 uppercase tracking-wider bg-lime-950/60 px-1.5 py-0.5 rounded border border-lime-500/20">Algorithms</span>
+                </div>
+                <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  150+ Solved
+                </div>
+                <div class="text-xs font-medium text-slate-300 mt-0.5">
+                  LeetCode Problems
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2.5 leading-relaxed pt-2 border-t border-slate-800">
+                Active problem solving in data structures, dynamic programming & graphs.
+              </p>
+            </div>
+
+            <!-- Badge 3 -->
+            <div class="group relative rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] flex flex-col justify-between cursor-default">
+              <div>
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-xl">👥</span>
+                  <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-wider bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/20">Leadership</span>
+                </div>
+                <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  Tech Club Organizer
+                </div>
+                <div class="text-xs font-medium text-slate-300 mt-0.5">
+                  KSIT Student Chapter
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2.5 leading-relaxed pt-2 border-t border-slate-800">
+                Organized workshops, peer mentorship, and developer meetups on campus.
+              </p>
+            </div>
+
+            <!-- Badge 4 -->
+            <div class="group relative rounded-xl bg-[#080b0f]/80 hover:bg-[#121820] border border-emerald-500/15 hover:border-emerald-400 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] flex flex-col justify-between cursor-default">
+              <div>
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-xl">📜</span>
+                  <span class="text-[10px] font-mono text-lime-400 uppercase tracking-wider bg-lime-950/60 px-1.5 py-0.5 rounded border border-lime-500/20">Credential</span>
+                </div>
+                <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  Full-Stack Certified
+                </div>
+                <div class="text-xs font-medium text-slate-300 mt-0.5">
+                  Modern Web Architecture
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2.5 leading-relaxed pt-2 border-t border-slate-800">
+                Certified proficiency in React, Node.js, REST APIs, and database design.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Academic Institution Card -->
+        <div class="cyber-card rounded-2xl border border-emerald-500/20 p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">K S Institute of Technology (KSIT)</h4>
+              <div class="text-xs font-mono text-emerald-400">Bengaluru, Karnataka</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">B.Tech / B.E. in Computer Science & Engineering (2023 - 2027)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto scroll-mt-20">
+    <div class="cyber-card rounded-3xl border border-emerald-500/20 p-8 sm:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8">
+          <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-500/20">
+            01 // BACKGROUND
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-4">
+            Building Practical Systems for Students & Tomorrow
+          </h2>
+          <p class="text-slate-300 leading-relaxed mb-4 text-sm sm:text-base">
+            I am <strong class="text-white">Thaman</strong>, a 2nd year Computer Science student at <strong class="text-emerald-300">K S I T, Bangalore</strong>. My coding projects focus on solving real student friction points—from campus event coordination and AI attendance automation to accessible study materials sharing.
+          </p>
+          <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+            Proficient in <strong class="text-emerald-400">React, Tailwind CSS, Python, C++, and Node.js</strong>, I bring a proactive, problem-solving mindset to every project.
+          </p>
+        </div>
+        <div class="lg:col-span-4 flex flex-col gap-3">
+          <div class="p-4 rounded-xl bg-[#080b0f] border border-emerald-500/20">
+            <div class="text-xs font-mono text-emerald-400 uppercase">Degree Program</div>
+            <div class="text-sm font-bold text-white mt-0.5">B.E. Computer Science</div>
+            <div class="text-xs text-slate-400">KSIT • VTU Affiliated</div>
+          </div>
+          <div class="p-4 rounded-xl bg-[#080b0f] border border-emerald-500/20">
+            <div class="text-xs font-mono text-lime-400 uppercase">Current Availability</div>
+            <div class="text-sm font-bold text-white mt-0.5">Summer / Fall Internships</div>
+            <div class="text-xs text-slate-400">Remote or Onsite (Bangalore)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-2xl bg-[#0d1117] border border-emerald-500/40 p-6 text-left shadow-[0_0_50px_rgba(16,185,129,0.3)]">
+      <button onclick="closeModal()" class="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-white rounded-lg bg-[#161e29]">✕</button>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+        <span class="font-mono text-xs text-emerald-400 uppercase">DIRECT DISPATCH</span>
+      </div>
+      <h3 class="text-xl font-bold text-white mb-2">Contact Thaman</h3>
+      <p class="text-xs text-slate-300 mb-4">2nd Year Computer Science Student at KSIT. Ready for internships and project collaborations!</p>
+      
+      <div class="p-3 rounded-xl bg-[#080b0f] border border-emerald-500/30 flex items-center justify-between mb-4">
+        <span class="font-mono text-xs text-slate-300">thaman.dev@ksit.edu.in</span>
+        <button onclick="copyEmail(this)" class="px-2.5 py-1 text-xs font-mono text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 rounded">Copy</button>
+      </div>
+
+      <button onclick="closeModal()" class="w-full py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-[#0d1117] font-bold text-xs uppercase tracking-wider">Close Window</button>
+    </div>
+  </div>
+
+  <!-- Interactive Toast Notification -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-xl bg-[#0d1117] border border-emerald-400 text-xs font-mono text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+    <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+    <span id="toast-text">Action completed successfully</span>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact" class="relative z-10 border-t border-slate-800/80 bg-[#080b0f]/80 backdrop-blur-md py-8 px-4 sm:px-6 lg:px-8 mt-20">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="text-white font-medium">Thaman</span>
+        <span>// Student Developer Portfolio • Cyber-Emerald Theme</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <span>K S I T, Bangalore</span>
+        <span>•</span>
+        <span class="text-emerald-400">2025-2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // 1. Matrix Grid Canvas Animation
+    (function initMatrixCanvas() {
+      const canvas = document.getElementById('matrix-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      const mouse = {
+        x: width * 0.5,
+        y: height * 0.4,
+        targetX: width * 0.5,
+        targetY: height * 0.4,
+        radius: 175
+      };
+
+      const ripples = [];
+
+      function handleResize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.scale(dpr, dpr);
+      }
+
+      window.addEventListener('resize', handleResize);
+      handleResize();
+
+      window.addEventListener('mousemove', (e) => {
+        mouse.targetX = e.clientX;
+        mouse.targetY = e.clientY;
+      });
+
+      window.addEventListener('click', (e) => {
+        ripples.push({
+          x: e.clientX,
+          y: e.clientY,
+          radius: 0,
+          maxRadius: 280,
+          alpha: 0.85,
+          speed: 4.8
+        });
+      });
+
+      const spacing = 32;
+      let time = 0;
+
+      function animate() {
+        time += 0.02;
+
+        mouse.x += (mouse.targetX - mouse.x) * 0.12;
+        mouse.y += (mouse.targetY - mouse.y) * 0.12;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const radialGrad = ctx.createRadialGradient(mouse.x, mouse.y, 10, mouse.x, mouse.y, 450);
+        radialGrad.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
+        radialGrad.addColorStop(0.5, 'rgba(163, 230, 53, 0.025)');
+        radialGrad.addColorStop(1, 'rgba(13, 17, 23, 0)');
+        ctx.fillStyle = radialGrad;
+        ctx.fillRect(0, 0, width, height);
+
+        const tiltX = (mouse.x / width - 0.5) * 14;
+        const tiltY = (mouse.y / height - 0.5) * 14;
+
+        for (let r = ripples.length - 1; r >= 0; r--) {
+          const rip = ripples[r];
+          rip.radius += rip.speed;
+          rip.alpha -= 0.016;
+          if (rip.alpha <= 0 || rip.radius >= rip.maxRadius) {
+            ripples.splice(r, 1);
+          }
+        }
+
+        const cols = Math.ceil(width / spacing) + 2;
+        const rows = Math.ceil(height / spacing) + 2;
+
+        for (let i = -1; i < cols; i++) {
+          for (let j = -1; j < rows; j++) {
+            const originX = i * spacing + tiltX;
+            const originY = j * spacing + tiltY;
+
+            const dx = mouse.x - originX;
+            const dy = mouse.y - originY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            const wave = Math.sin(time + originX * 0.008 + originY * 0.008) * 2;
+            let posX = originX;
+            let posY = originY + wave;
+            let dotRadius = 1.25;
+            let alpha = 0.20;
+            let isNeon = false;
+
+            if (dist < mouse.radius) {
+              const factor = 1 - dist / mouse.radius;
+              const push = factor * 14;
+              const angle = Math.atan2(dy, dx);
+
+              posX -= Math.cos(angle) * push;
+              posY -= Math.sin(angle) * push;
+
+              dotRadius = 1.25 + factor * 2.3;
+              alpha = 0.28 + factor * 0.72;
+              isNeon = true;
+            }
+
+            for (let r = 0; r < ripples.length; r++) {
+              const rip = ripples[r];
+              const ripDist = Math.hypot(rip.x - posX, rip.y - posY);
+              const ringDist = Math.abs(ripDist - rip.radius);
+              if (ringDist < 26) {
+                const ripFactor = (1 - ringDist / 26) * rip.alpha;
+                dotRadius = Math.max(dotRadius, 1.25 + ripFactor * 2.5);
+                alpha = Math.min(1, alpha + ripFactor * 0.85);
+                isNeon = true;
+              }
+            }
+
+            ctx.beginPath();
+            ctx.arc(posX, posY, dotRadius, 0, Math.PI * 2);
+
+            if (isNeon) {
+              if (dist < mouse.radius * 0.4) {
+                ctx.fillStyle = `rgba(163, 230, 53, ${alpha})`;
+              } else {
+                ctx.fillStyle = `rgba(16, 185, 129, ${alpha})`;
+              }
+            } else {
+              ctx.fillStyle = `rgba(52, 211, 153, ${alpha * 0.6})`;
+            }
+            ctx.fill();
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+
+    // 2. Interactive 3D Perspective Tilt Physics
+    (function init3DTiltCards() {
+      const cards = document.querySelectorAll('.tilt-card');
+      
+      cards.forEach((card) => {
+        const shine = card.querySelector('.card-shine');
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = (((centerY - y) / centerY) * 9.5).toFixed(2);
+          const rotateY = (((x - centerX) / centerX) * 9.5).toFixed(2);
+
+          card.style.transform = `perspective(1000px) translateY(-6px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+          if (shine) {
+            shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(16, 185, 129, 0.24) 0%, rgba(163, 230, 53, 0.08) 25%, transparent 65%)`;
+            shine.style.opacity = '1';
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          if (shine) {
+            shine.style.opacity = '0';
+          }
+        });
+      });
+    })();
+
+    // 3. Smooth Project Filter Engine
+    function setFilter(category, clickedBtn) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach((btn) => {
+        btn.classList.remove('bg-emerald-400', 'text-[#0d1117]', 'font-bold', 'shadow-[0_0_20px_rgba(16,185,129,0.55)]', 'active');
+        btn.classList.add('bg-[#0d1117]/80', 'text-slate-400', 'border', 'border-emerald-500/20');
+      });
+
+      clickedBtn.classList.remove('bg-[#0d1117]/80', 'text-slate-400', 'border', 'border-emerald-500/20');
+      clickedBtn.classList.add('bg-emerald-400', 'text-[#0d1117]', 'font-bold', 'shadow-[0_0_20px_rgba(16,185,129,0.55)]', 'active');
+
+      const cards = document.querySelectorAll('.project-card');
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const categories = (card.getAttribute('data-categories') || '').split(',');
+        if (category === 'All' || categories.includes(category)) {
+          card.style.display = 'flex';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.96)';
+          setTimeout(() => {
+            card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 30);
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileToggle?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+    }
+
+    // Modal Handlers
+    const contactModal = document.getElementById('contact-modal');
+    function openModal() {
+      contactModal.classList.remove('hidden');
+    }
+    function closeModal() {
+      contactModal.classList.add('hidden');
+    }
+    contactModal?.addEventListener('click', (e) => {
+      if (e.target === contactModal) closeModal();
+    });
+
+    // Toast Trigger
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.textContent = text;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Resume Download Simulation
+    function handleDownloadCV() {
+      const text = document.getElementById('cv-btn-text');
+      text.textContent = 'Generating PDF...';
+      setTimeout(() => {
+        text.textContent = 'Download Resume / CV';
+        showToast('📄 Download Started: Thaman_KSIT_Resume.pdf');
+      }, 1000);
+    }
+
+    // Copy Email
+    function copyEmail(btn) {
+      navigator.clipboard?.writeText('thaman.dev@ksit.edu.in');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('text-lime-300');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('text-lime-300');
+      }, 2000);
+      showToast('📋 Email copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
